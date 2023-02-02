@@ -1,3 +1,4 @@
+#define _XOPEN_SOURCE 700
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/stat.h>
@@ -5,7 +6,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <string.h>
-#include <regex.h>
 #include <time.h>
 #include <dirent.h>
 #include "file_manip.h"
@@ -14,6 +14,10 @@
 #include "time_strings.h"
 
 #define MAX_SIZE 2000
+
+
+void choice() {
+}
 
 int main() {
     printf("\n Welcome to my flashcard app - Sherlly's app \n \n");
@@ -59,7 +63,8 @@ int main() {
 	char ** deckList = DirectoryArray(deck_path,amount_of_files_deckpath);
 
 	printf("amount of flashcards in deck are: %d \n",amount_of_files_deckpath);
-	choice:
+	sleep(1);
+
 	char* choice = deckList[choose_random(0,amount_of_files_deckpath)];
 	//set filepath
 	char flash_card_path[1024];
@@ -68,24 +73,22 @@ int main() {
 	//read file
 	char* file_string = readFile(flash_card_path);
 	//parse file into struct
-	struct flashcard chosen_card;
-	chosen_card = string_to_flashcard(file_string);
 
-	//set last seen time
+
+	struct flashcard chosen_card = string_to_flashcard(file_string);
+	choice:
 
 	//see if delay forbids showing
 	char* forbidden = "Yes";
 	if (forbidden == "No") {
-	goto choice;
+	 goto choice;
 	}
-
-	//free malloced string
-	free(file_string);
 
 	//ask prompt
 	prompt:
 	printf("card chosen from deck is %s\n",flash_card_path);
-	printf("Prompt: %s \nplease press r to reveal answer \n \n",chosen_card.prompt);
+	sleep(4);
+	printf("Prompt: %s \n \n \nplease press r to reveal answer \n \n",chosen_card.prompt);
 	char show_answer[30];
 
 	// use user choice
@@ -95,26 +98,40 @@ int main() {
 
 	}
 	else {
-		printf("that isn't an r, showing promt again \n");
+		printf("\nthat isn't an r, showing promt again \n");
 		goto prompt;
 	}
 
 
 	//ask if they got the flashcard correct
-	printf("\n did you get this one correct? (y/n) \n \n ");
-	char correct_question[30];
+	printf("\ndid you get this one correct? (y/n) \n \n ");
+	char correct_question[1];
+	int delay_value = chosen_card.delay;
 
-	// use user choice
+	 //use user choice
 	scanf("%s",&correct_question);
-	if (correct_question[0] == 'y') {
-	 printf("Well done getting it right, you will see it in some time \n");
-	}
-	else {
-		printf("Don't worry about getting it wrong \n");
-	}
-	//write to file
-
+ 	if (correct_question[0] == 'y') {
+ 	 printf("Well done getting it right, you will see it in some time \n");
+	  ++delay_value;
+ 	}
+ 	else {
+ 		printf("Don't worry about getting it wrong \n");
+		delay_value = 0;
+ 	}
+	sleep(1);
+      //write to file
+        time_t today = time(NULL);
+  	chosen_card.lastseen = today;
+  	chosen_card.delay = delay_value;
+	char* string_of_new_card = flashcard_to_string(chosen_card);
+	writeFile(flash_card_path,string_of_new_card);
+	//free malloced string
+	free(string_of_new_card);
+	free(file_string);
+	free(chosen_card_);
 	goto choice;
+
+
 
 return 0;
 }
