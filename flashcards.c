@@ -65,29 +65,27 @@ int main() {
 	printf("amount of flashcards in deck are: %d \n",amount_of_files_deckpath);
 	sleep(1);
 
+
+	choice:
 	char* choice = deckList[choose_random(0,amount_of_files_deckpath)];
 	//set filepath
 	char flash_card_path[1024];
     	sprintf(flash_card_path,"%s/%s",deck_path,choice);
-
 	//read file
 	char* file_string = readFile(flash_card_path);
+
 	//parse file into struct
-
-
 	struct flashcard chosen_card = string_to_flashcard(file_string);
-	choice:
-
 	//see if delay forbids showing
 	char* forbidden = "Yes";
 	if (forbidden == "No") {
-	 goto choice;
+ 		goto choice;
 	}
 
 	//ask prompt
 	prompt:
-	printf("card chosen from deck is %s\n",flash_card_path);
-	sleep(4);
+	printf("\n \n grabbing flashcard %s from deck ....\n \n",flash_card_path);
+	sleep(2);
 	printf("Prompt: %s \n \n \nplease press r to reveal answer \n \n",chosen_card.prompt);
 	char show_answer[30];
 
@@ -128,9 +126,7 @@ int main() {
 	//free malloced string
 	free(string_of_new_card);
 	free(file_string);
-	free(chosen_card_);
 	goto choice;
-
 
 
 return 0;
