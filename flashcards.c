@@ -69,16 +69,19 @@ int main() {
 	choice:
 	char* choice = deckList[choose_random(0,amount_of_files_deckpath)];
 	//set filepath
-	char flash_card_path[1024];
-    	sprintf(flash_card_path,"%s/%s",deck_path,choice);
+//	char flash_card_path[1024];
+  //  	sprintf(flash_card_path,"%s/%s",deck_path,choice);
+//DEBUG
+	char* flash_card_path = "/home/sherlly/.local/share/flashcards/memory_system/flashcard_628.txt";
 	//read file
-	char* file_string = readFile(flash_card_path);
+        char* file_string = readFile(flash_card_path);
 
 	//parse file into struct
 	struct flashcard chosen_card = string_to_flashcard(file_string);
 	//see if delay forbids showing
-	char* forbidden = "Yes";
-	if (forbidden == "No") {
+	int forbidden = check_if_forbidden(chosen_card.lastseen,chosen_card.delay);
+	if (forbidden) {
+		printf("forbidden, ignoring");
  		goto choice;
 	}
 
@@ -109,7 +112,7 @@ int main() {
 	 //use user choice
 	scanf("%s",&correct_question);
  	if (correct_question[0] == 'y') {
- 	 printf("Well done getting it right, you will see it in some time \n");
+ 	 printf("Well done getting it right, it will be hidden for longer \n");
 	  ++delay_value;
  	}
  	else {
@@ -125,7 +128,7 @@ int main() {
 	writeFile(flash_card_path,string_of_new_card);
 	//free malloced string
 	free(string_of_new_card);
-	free(file_string);
+	//free(file_string);
 	goto choice;
 
 

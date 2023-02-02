@@ -21,22 +21,45 @@ time_t string_to_time_(const char* s_time) {
     return t;
 }
 
-// int check_if_forbidden(char* time_string,int delay_code) {
-// //parse string
-// time_t time_parsed = string_to_time(time_string);
-//
-// struct tm *local_time = localtime(&time);
-// time_t time_card_can_be_shown;
-// switch(delay_code) {
-// 	case 0, ;;
-// 	case 1, ;;
-// 	case 2, ;;
-// 	case 3, ;;
-// 	case 4, ;;
-//
-// }
-//
-// }
-// time_t t = time(NULL);
+ int check_if_forbidden(time_t lastseen,int delay_code) {
+ int forbidden;
+ //parse string
+ struct tm* t_ = gmtime(&lastseen);
+ struct tm t = *t_;
+ int days_to_add;
+ if (delay_code > 4) {
+	 days_to_add = 30;
+ }
+ else if (delay_code > 3) {
+	 days_to_add = 14;
+ }
+ else if (delay_code > 2) {
+	 days_to_add = 7;
+ }
+ else if (delay_code > 1) {
+	 days_to_add = 1;
+ }
+else {
+	days_to_add = 0;
+}
+  t.tm_mday += 40;
+ time_t date_allowed =  mktime(&t);
+ time_t date_tday = time(NULL);
+ signed int difference = difftime(date_allowed,date_tday);
+ //signed int difference = difftime(date_tday,date_allowed);
+ printf("difference is %d",difference);
+ if (difference > 0) {
+	 forbidden = 1;
+
+ }
+ else {
+	 forbidden = 0;
+ }
+ printf("forbid flag is %d",forbidden);
+
+
+ return forbidden;
+
+ }
 #endif
 
