@@ -4,10 +4,9 @@ It is a minimalist study app that allows you to select a deck of flashcards and 
 You get shown the prompt, then can reveal the answer.
 You get the option to say if you got it correct or not.
 
-If it was correct, it will mark it to be asked again in a few minutes.
-If you get it correct again, it will ask you again in a day.
+If it correct again, it will ask you again in a day.
 If it is correct again, it will ask you again in a week.
-If you are correct again, it will ask you again in a month.
+If you are correct again, it will ask you again in about a month.
 
 If you get something incorrect, it will reset it to be asked again immedately.
 
