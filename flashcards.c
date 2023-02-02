@@ -69,25 +69,25 @@ int main() {
 	choice:
 	char* choice = deckList[choose_random(0,amount_of_files_deckpath)];
 	//set filepath
-//	char flash_card_path[1024];
-  //  	sprintf(flash_card_path,"%s/%s",deck_path,choice);
+	char flash_card_path[1024];
+    	sprintf(flash_card_path,"%s/%s",deck_path,choice);
 //DEBUG
-	char* flash_card_path = "/home/sherlly/.local/share/flashcards/memory_system/flashcard_628.txt";
+	//char* flash_card_path = "/home/sherlly/.local/share/flashcards/memory_system/flashcard_628.txt";
 	//read file
         char* file_string = readFile(flash_card_path);
 
 	//parse file into struct
 	struct flashcard chosen_card = string_to_flashcard(file_string);
 	//see if delay forbids showing
-	int forbidden = check_if_forbidden(chosen_card.lastseen,chosen_card.delay);
-	if (forbidden) {
-		printf("forbidden, ignoring");
- 		goto choice;
-	}
+//	int forbidden = check_if_forbidden(chosen_card.lastseen,chosen_card.delay);
+//	if (forbidden) {
+//		printf("forbidden, ignoring");
+// 		goto choice;
+//	}
 
 	//ask prompt
 	prompt:
-	printf("\n \n grabbing flashcard %s from deck ....\n \n",flash_card_path);
+	printf("\n \n grabbing flashcard from deck ....\n \n");
 	sleep(2);
 	printf("Prompt: %s \n \n \nplease press r to reveal answer \n \n",chosen_card.prompt);
 	char show_answer[30];
@@ -128,7 +128,7 @@ int main() {
 	writeFile(flash_card_path,string_of_new_card);
 	//free malloced string
 	free(string_of_new_card);
-	//free(file_string);
+	free(file_string);
 	goto choice;
 
 
