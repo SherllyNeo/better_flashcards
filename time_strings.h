@@ -23,10 +23,10 @@ time_t string_to_time_(const char* s_time) {
 
  int check_if_forbidden(time_t lastseen,int delay_code) {
  int forbidden;
+ int days_to_add = 0;
  //parse string
- struct tm* t_ = gmtime(&lastseen);
- struct tm t = *t_;
- int days_to_add;
+ struct tm * time_last_seen_tm_p = localtime(&lastseen);
+ struct tm time_last_seen_tm = *time_last_seen_tm_p;
  if (delay_code > 4) {
 	 days_to_add = 30;
  }
@@ -42,20 +42,17 @@ time_t string_to_time_(const char* s_time) {
 else {
 	days_to_add = 0;
 }
-  t.tm_mday += 40;
- time_t date_allowed =  mktime(&t);
+  time_last_seen_tm.tm_mday += days_to_add;
+ time_t date_allowed =  mktime(&time_last_seen_tm);
  time_t date_tday = time(NULL);
- signed int difference = difftime(date_allowed,date_tday);
- //signed int difference = difftime(date_tday,date_allowed);
- printf("difference is %d",difference);
+ signed int difference = difftime(date_tday,date_allowed);
  if (difference > 0) {
-	 forbidden = 1;
+	 forbidden = 0;
 
  }
  else {
-	 forbidden = 0;
+	 forbidden = 1;
  }
- printf("forbid flag is %d",forbidden);
 
 
  return forbidden;

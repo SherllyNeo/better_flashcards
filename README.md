@@ -1,4 +1,4 @@
-This is a cli app written in X
+This is a cli app written in C
 
 It is a minimalist study app that allows you to select a deck of flashcards and study them.
 You get shown the prompt, then can reveal the answer.
