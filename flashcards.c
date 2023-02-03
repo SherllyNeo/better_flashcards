@@ -77,11 +77,12 @@ int main() {
 	//parse file into struct
 	struct flashcard chosen_card = string_to_flashcard(file_string);
 	//see if delay forbids showing
-	int forbidden = check_if_forbidden(chosen_card.lastseen,chosen_card.delay);
-	if (forbidden) {
-		printf("\n random choice has been seen recently and you did correctly \n \n redrawing.. \n \n");
- 		goto choice;
-	}
+// 	int forbidden = check_if_forbidden(chosen_card.lastseen,chosen_card.delay);
+// 	printf("%d\n",forbidden);
+// 	if (forbidden) {
+// 		printf("\n random choice has been seen recently and you did correctly \n \n redrawing.. \n \n");
+//  		goto choice;
+// 	}
 
 	//ask prompt
 	prompt:

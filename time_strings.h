@@ -46,6 +46,8 @@ else {
  time_t date_allowed =  mktime(&time_last_seen_tm);
  time_t date_tday = time(NULL);
  signed int difference = difftime(date_tday,date_allowed);
+
+
  if (difference > 0) {
 	 forbidden = 0;
 

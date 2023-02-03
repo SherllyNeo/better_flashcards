@@ -37,11 +37,11 @@ struct flashcard string_to_flashcard(char* flashcard_string) {
 	strcpy(new_flashcard.answer,json_object_get_string(answer_j));
 	new_flashcard.lastseen = t;
 	new_flashcard.delay = json_object_get_int(delay_j);;
-//	json_object_put(prompt_j);
-//	json_object_put(answer_j);
-//	json_object_put(lastseen_j);
-//	json_object_put(delay_j);
-//	json_object_put(parsed_json);
+// 	json_object_put(prompt_j);
+// 	json_object_put(answer_j);
+// 	json_object_put(lastseen_j);
+// 	json_object_put(delay_j);
+// 	json_object_put(parsed_json);
 	return new_flashcard;
 
 
