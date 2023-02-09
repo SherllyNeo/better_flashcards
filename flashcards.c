@@ -13,7 +13,7 @@
 #include "flashcard.h"
 #include "time_strings.h"
 
-#define MAX_SIZE 2000
+#define MAX_SIZE 10000
 
 
 void choice() {
@@ -77,17 +77,17 @@ int main() {
 	//parse file into struct
 	struct flashcard chosen_card = string_to_flashcard(file_string);
 	//see if delay forbids showing
-// 	int forbidden = check_if_forbidden(chosen_card.lastseen,chosen_card.delay);
-// 	printf("%d\n",forbidden);
-// 	if (forbidden) {
-// 		printf("\n random choice has been seen recently and you did correctly \n \n redrawing.. \n \n");
-//  		goto choice;
-// 	}
+ 	int forbidden = check_if_forbidden(chosen_card.lastseen,chosen_card.delay);
+ 	printf("%d\n",forbidden);
+ 	if (forbidden) {
+ 		printf("\n random choice has been seen recently and you did correctly \n \n redrawing.. \n \n");
+  		goto choice;
+ 	}
 
 	//ask prompt
 	prompt:
 	printf("\n \n grabbing flashcard from deck ....\n \n");
-	sleep(2);
+	sleep(1);
 	printf("Prompt: %s \n \n \nplease press r to reveal answer \n \n",chosen_card.prompt);
 	char show_answer[30];
 
