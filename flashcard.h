@@ -5,6 +5,9 @@
 #include "time_strings.h"
 #include <json-c/json.h>
 
+#define MAX_SIZE 1000
+
+
 
 struct flashcard {
   char prompt[MAX_SIZE];
@@ -29,7 +32,18 @@ struct flashcard string_to_flashcard(char* flashcard_string) {
 
 
 	//parse datetime
-	time_t t = string_to_time_(json_object_get_string(lastseen_j));
+	char dt_string[MAX_SIZE];
+	strcpy(dt_string,json_object_get_string(lastseen_j));
+	struct tm date = {};
+	strptime(dt_string, "%Y-%m-%d", &date);
+	time_t t = mktime(&date);
+
+	char dt[20];
+	struct tm * timeinfo3;
+	timeinfo3 = localtime (&t);
+	strftime(dt, sizeof(dt), "%Y-%m-%d %H:%M", timeinfo3);
+
+
 
 	//fill struct
 	struct flashcard new_flashcard;
@@ -37,11 +51,11 @@ struct flashcard string_to_flashcard(char* flashcard_string) {
 	strcpy(new_flashcard.answer,json_object_get_string(answer_j));
 	new_flashcard.lastseen = t;
 	new_flashcard.delay = json_object_get_int(delay_j);;
+ 	json_object_put(parsed_json);
 // 	json_object_put(prompt_j);
 // 	json_object_put(answer_j);
 // 	json_object_put(lastseen_j);
 // 	json_object_put(delay_j);
-// 	json_object_put(parsed_json);
 	return new_flashcard;
 
 
@@ -50,10 +64,17 @@ struct flashcard string_to_flashcard(char* flashcard_string) {
 char* flashcard_to_string(struct flashcard  flash_card ) {
 	char *buf;
 	size_t sz;
-	sz = snprintf(NULL, 0,"{\"prompt\":\"%s\",\"answer\":\"%s\",\"date-last-seen\":\"%s\",\"delay\":\"%d\"}",flash_card.prompt,flash_card.answer,time_to_string_(flash_card.lastseen),flash_card.delay);
+	//time to string
+	time_t time = flash_card.lastseen;
+	struct tm *tm = localtime(&time);
+	static char time_string[50];
+	strftime(time_string, 50, "%Y-%m-%d", tm);
 
-	buf = (char *)malloc(sz + 3); /* make sure you check for != NULL in real code */
-	snprintf(buf, sz+1, "{\"prompt\":\"%s\",\"answer\":\"%s\",\"date-last-seen\":\"%s\",\"delay\":\"%d\"}",flash_card.prompt,flash_card.answer,time_to_string_(flash_card.lastseen),flash_card.delay);
+	sz = snprintf(NULL, 0,"{\"prompt\":\"%s\",\"answer\":\"%s\",\"date-last-seen\":\"%s\",\"delay\":\"%d\"}",flash_card.prompt,flash_card.answer,time_string,flash_card.delay);
+
+
+	buf = (char *)malloc(sz + 3);
+	snprintf(buf, sz+1, "{\"prompt\":\"%s\",\"answer\":\"%s\",\"date-last-seen\":\"%s\",\"delay\":\"%d\"}",flash_card.prompt,flash_card.answer,time_string,flash_card.delay);
 
 	return buf;
 

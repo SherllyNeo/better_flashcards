@@ -16,10 +16,10 @@
 #define MAX_SIZE 10000
 
 
-void choice() {
-}
+
 
 int main() {
+    srand(time(NULL));
     printf("\n Welcome to my flashcard app - Sherlly's app \n \n");
     start:
     setup_directory();
@@ -59,6 +59,7 @@ int main() {
 	printf("drawing flashcard files from %s\n",deck_path);
 
 
+
 	int amount_of_files_deckpath = count_dir(deck_path);
 	char ** deckList = DirectoryArray(deck_path,amount_of_files_deckpath);
 
@@ -66,23 +67,31 @@ int main() {
 	sleep(1);
 
 
-	choice:
- 	char* choice = deckList[choose_random(0,amount_of_files_deckpath)];
- 	//set filepath
+	char* choice;
  	char flash_card_path[1024];
+	struct flashcard chosen_card;
+	char* file_string;
+	int random_index;
+	int forbidden = 1;
+	while (forbidden == 1) {
+	choice:
+	random_index = rand() % (amount_of_files_deckpath);
+ 	choice = deckList[random_index];
+ 	//set filepath
      	sprintf(flash_card_path,"%s/%s",deck_path,choice);
 	//read file
-        char* file_string = readFile(flash_card_path);
+        file_string = readFile(flash_card_path);
 
 	//parse file into struct
-	struct flashcard chosen_card = string_to_flashcard(file_string);
+	chosen_card = string_to_flashcard(file_string);
+	printf("card chosen was %s\n",chosen_card.prompt);
 	//see if delay forbids showing
- 	int forbidden = check_if_forbidden(chosen_card.lastseen,chosen_card.delay);
- 	printf("%d\n",forbidden);
- 	if (forbidden) {
- 		printf("\n random choice has been seen recently and you did correctly \n \n redrawing.. \n \n");
-  		goto choice;
+
+	forbidden = check_if_forbidden(chosen_card.lastseen,chosen_card.delay);
+ 	if (forbidden == 1) {
+ 		printf("\n random choice %s has been seen recently and you did correctly \n \n redrawing.. \n \n", choice);
  	}
+	}
 
 	//ask prompt
 	prompt:
@@ -92,7 +101,7 @@ int main() {
 	char show_answer[30];
 
 	// use user choice
-	scanf("%s",&show_answer);
+scanf("%s",&show_answer);
 	if (show_answer[0] == 'r') {
 	 printf("Answer is: %s \n",chosen_card.answer);
 
@@ -128,7 +137,6 @@ int main() {
 	//free malloced string
 	free(string_of_new_card);
         free(file_string);
-
 
 	goto choice;
 

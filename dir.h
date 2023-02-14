@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <dirent.h>
 #include <unistd.h>
-#define MAX_SIZE 2000
+
+#define MAX_SIZE 1000
 
 void setup_directory() {
     //awful flashcard directory maker
@@ -24,8 +25,8 @@ void setup_directory() {
 }
 
 int choose_random(int min, int max) {
-	srand(time(0));
-	int number = (rand() % (max-min)) + min;
+	srand(time(NULL));
+	int number = (rand() % (max - min)) + min;
 	return number;
 
 }
