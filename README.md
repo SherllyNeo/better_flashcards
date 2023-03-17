@@ -1,3 +1,4 @@
+# LEGACY CODE - see suckless mental trainer for a better implimentation of this code
 This is a cli app written in C
 
 It is a minimalist study app that allows you to select a deck of flashcards and study them.
