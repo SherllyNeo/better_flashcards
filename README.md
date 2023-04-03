@@ -1,5 +1,7 @@
-# LEGACY CODE - see suckless mental trainer for a better implimentation of this code
+# Updated Flashcard CLI
 This is a cli app written in C
+
+Anki style
 
 It is a minimalist study app that allows you to select a deck of flashcards and study them.
 You get shown the prompt, then can reveal the answer.
@@ -11,25 +13,13 @@ If you are correct again, it will ask you again in about a month.
 
 If you get something incorrect, it will reset it to be asked again immedately.
 
-Each deck is a subdirectory in the $HOME/.local/share/flashcards directory.
+Each deck is a file in the $HOME/.local/share/flashcards directory.
 
-The deck folder name is what shows up in the app.
-Inside are several textfiles for each question.
-They have the json structure
-{
-"prompt":,
-"answer":,
-"lastseen":,
-"delay":,
-}
+They have a csv structure
+prompt,answer,lastseen,delay
 
 for example
-{
-"prompt":"When was the moonlanding?",
-"answer":"1959",
-"lastseen":"2022-04-13",
-"delay":"2",
-}
+When was the moonlanding?,1959,2022-04-13,2
 
 these will be used in the obvious manner.
 
