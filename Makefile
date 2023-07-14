@@ -1,4 +1,6 @@
-flashcards: flashcards.c 
-	$(CC) flashcards.c -g -std=gnu99 -o flashcard-cli -ljson-c
+flashcards: flashcards.c
+	$(CC) flashcards.c config.h -std=gnu11 -o flashcards -lm
 install:
-	cp -f flashcard-cli /usr/local/bin
+	cp -f flashcards /usr/local/bin
+clean:
+	$(CC) flashcards.c config.h  -g -std=gnu11 -o smt -lm && rm vg*

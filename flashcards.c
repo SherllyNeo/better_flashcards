@@ -39,15 +39,18 @@ struct flashcard* csv_to_flashcard_array(char* flashcard_deck,int* p_amount_of_c
 	    int parse_helper = flag % 4;
 	    switch(parse_helper) {
 	    	case 0:
+			;
 			/* parse prompt */
 
 			strcpy(tmp_flashcard.prompt,token);
 			break;
 	    	case 1:
+			;
 			/* parse answer */
 			strcpy(tmp_flashcard.answer,token);
 			break;
 	    	case 2:
+			;
 			/* parse date */
 			struct tm date = {};
 			strptime(token, "%Y-%m-%d", &date);
@@ -55,10 +58,12 @@ struct flashcard* csv_to_flashcard_array(char* flashcard_deck,int* p_amount_of_c
 			tmp_flashcard.lastseen = t;
 			break;
 	    	case 3:
+			;
 			/* parse delay */
 			tmp_flashcard.delay = atoi(token);
 			break;
 		default:
+			;
 			continue;
 			;;
 	    }
@@ -269,7 +274,7 @@ int change_line_of_csv(char *filepath, char* line_to_replace, int replace_line) 
 	 else if (delay_code > 2) {
 		 days_to_add = 7;
 	 }
-	 else if (delay_code > 1) {
+	 else if (delay_code > 0) {
 		 days_to_add = 1;
 	 }
 	else {
@@ -286,7 +291,7 @@ int change_line_of_csv(char *filepath, char* line_to_replace, int replace_line) 
 	 return forbidden;
 }
 
-void flashcards_game() {
+void main() {
 	/* Inital set up */
 	srand(time(NULL));
 	start:
@@ -420,7 +425,4 @@ void flashcards_game() {
 	 goto choice;
 
 };
-int main() {
-	flashcards_game();
-	return 1;
-}
+
