@@ -6,7 +6,7 @@ flashcards src/main.c:
 	$(CC) src/main.c -std=gnu11 -o ./bin/flashcards -lm
 install:
 	mkdir -p bin
-	$(CC) src/main.c -std=gnu11 -o ./bin/flashcards -lm && cp ./bin/flashcards $(HOME)/local/bin
+	$(CC) src/main.c -std=gnu11 -o ./bin/flashcards -lm && cp ./bin/flashcards $(HOME)/.local/bin
 clean:
 	mkdir -p bin
 	$(CC) src/main.c -std=gnu11 -o ./bin/flashcards -lm && rm vg*

@@ -347,7 +347,7 @@ int main() {
 	/* Load in all lines of csv as an array of structs, discard all of the invalid structs, then check length of array */
 	flashcard_array = csv_to_flashcard_array(deck_path,&amount_of_cards);
 	if (amount_of_cards == 0) {
-		dprintf(stderr,"\nThere are no cards in this deck (csv file)\n");
+		fprintf(stderr,"\nThere are no cards in this deck (csv file)\n");
 		exit(EXIT_FAILURE);
 	}
 	int original_amount = amount_of_cards;
