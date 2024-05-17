@@ -19,12 +19,14 @@ They have a csv structure
 prompt,answer,lastseen,delay
 
 for example
-```bash
+```csv
 When was the moonlanding?,1959,2022-04-13,2
+```
 
 these will be used in the obvious manner.
 
 
+```bash
 Example use:
 
 

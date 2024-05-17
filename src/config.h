@@ -6,7 +6,7 @@
 
 
 /* Flashcard path - this will be from your $HOME file. Set it to what you need*/
-#define FLASHCARD_FOLDER ".local/share/flashcards"
+#define FLASHCARD_FOLDER ".local/share/flashcards.csv"
 
 /* some colours used throughout the program, written the usa way */
 #define ANSI_COLOR_RED     "\x1b[31m"
