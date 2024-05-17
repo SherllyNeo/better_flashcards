@@ -291,7 +291,7 @@ int change_line_of_csv(char *filepath, char* line_to_replace, int replace_line) 
 	 return forbidden;
 }
 
-void main() {
+int main() {
 	/* Inital set up */
 	srand(time(NULL));
 	start:
@@ -317,11 +317,11 @@ void main() {
 	/* Validate user choice */
 	const int result = scanf("%d",&user_choice);
 	if (1 != result) {
-		printf("please type in a valid option \n");
+		printf("please type in a valid option\n");
 		goto start;
 		}
 	if (user_choice < 0 || user_choice > amount_of_files-1) {
-		printf("please type in a valid option \n");
+		printf("please type in a valid option\n");
 		goto start;
 	}
 
@@ -347,8 +347,8 @@ void main() {
 	/* Load in all lines of csv as an array of structs, discard all of the invalid structs, then check length of array */
 	flashcard_array = csv_to_flashcard_array(deck_path,&amount_of_cards);
 	if (amount_of_cards == 0) {
-		printf("\nThere are no cards in this deck (csv file)\n");
-		exit(0);
+		dprintf(stderr,"\nThere are no cards in this deck (csv file)\n");
+		exit(EXIT_FAILURE);
 	}
 	int original_amount = amount_of_cards;
 	for (int i = 0; i<original_amount;++i) {
@@ -367,45 +367,45 @@ void main() {
 	}
 
 
-	printf("\nThere are %d viable cards left in the deck\n",amount_of_cards);
+	printf("There are %d viable cards left in the deck\n",amount_of_cards);
 	sleep(1);
 
 
-	printf("\n \n grabbing flashcard from deck ....\n \n");
+	printf("grabbing flashcard from deck...\n");
 	sleep(1);
 	random_index = choose_random(0, amount_of_cards);
 	chosen_card = flashcard_array[random_index];
 
 	//ask prompt
 	prompt:
-	printf("Prompt: %s \n \n \nplease press r to reveal answer \n \n",chosen_card.prompt);
+	printf("Prompt: %s\nplease press r to reveal answer\n",chosen_card.prompt);
 	char show_answer[30];
 
 	// use user choice
 	scanf("%s",&show_answer);
 	if (show_answer[0] == 'r') {
-	 printf("Answer is: %s \n",chosen_card.answer);
+	 printf("Answer is: %s\n",chosen_card.answer);
 
 	}
 	else {
-		printf("\nthat isn't an r, showing promt again \n");
+		printf("\nthat isn't an r, showing promt again\n");
 		goto prompt;
 	}
 
 
 	//ask if they got the flashcard correct
-	printf("\ndid you get this one correct? (y/n) \n \n ");
+	printf("did you get this one correct? (y/n)\n");
 	char correct_question[1];
 	int delay_value = chosen_card.delay;
 
 	 //use user choice
 	scanf("%s",&correct_question);
  	if (correct_question[0] == 'y') {
- 	 printf(ANSI_COLOR_GREEN "Well done getting it right, it will be hidden for longer \n" ANSI_COLOR_RESET);
+ 	 printf(ANSI_COLOR_GREEN "Well done getting it right, it will be hidden for longer\n" ANSI_COLOR_RESET);
 	  ++delay_value;
  	}
  	else {
- 		printf("Don't worry about getting it wrong \n");
+ 		printf("Don't worry about getting it wrong\n");
 		delay_value = 0;
  	}
 	sleep(1);
@@ -423,6 +423,7 @@ void main() {
 
 
 	 goto choice;
+     return 0;
 
 };
 
