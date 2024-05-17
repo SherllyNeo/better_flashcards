@@ -1,6 +1,12 @@
-flashcards: flashcards.c
-	$(CC) flashcards.c config.h -std=gnu11 -o flashcards -lm
+CC=tcc
+
+
+flashcards src/main.c: 
+	mkdir -p bin
+	$(CC) src/main.c -std=gnu11 -o ./bin/flashcards -lm
 install:
-	cp -f flashcards /usr/local/bin
+	mkdir -p bin
+	$(CC) src/main.c -std=gnu11 -o ./bin/flashcards -lm && cp ./bin/flashcards .local/bin
 clean:
-	$(CC) flashcards.c config.h  -g -std=gnu11 -o smt -lm && rm vg*
+	mkdir -p bin
+	$(CC) src/main.c -std=gnu11 -o ./bin/flashcards -lm && rm vg*

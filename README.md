@@ -1,4 +1,4 @@
-# Updated Flashcard CLI
+# Better flashcards
 This is a cli app written in C
 
 Anki style
@@ -19,6 +19,7 @@ They have a csv structure
 prompt,answer,lastseen,delay
 
 for example
+```bash
 When was the moonlanding?,1959,2022-04-13,2
 
 these will be used in the obvious manner.
@@ -44,3 +45,4 @@ y
 "Adding weeks delay to card. This will be avaliable to be asked again on 2023-02-3. It is the 3rd time you got this correct"
 
 "What caused WW1?"
+```
